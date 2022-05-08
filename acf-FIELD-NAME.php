@@ -80,7 +80,7 @@ class NAMESPACE_acf_plugin_FIELD_NAME {
 		// include
 		include_once('fields/class-NAMESPACE-acf-field-FIELD-NAME-v' . $version . '.php');
 
-		
+		echo "";
 	}
 	
 }
