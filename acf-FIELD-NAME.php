@@ -11,9 +11,10 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 
+define( 'ROOT_PATH', plugin_dir_url( __FILE__ ) );
+
 // exit if accessed directly
 if( ! defined( 'ABSPATH' ) ) exit;
-
 
 // check if class already exists
 if( !class_exists('NAMESPACE_acf_plugin_FIELD_NAME') ) :
@@ -51,6 +52,18 @@ class NAMESPACE_acf_plugin_FIELD_NAME {
 		// include field
 		add_action('acf/include_field_types', 	array($this, 'include_field')); // v5
 		add_action('acf/register_fields', 		array($this, 'include_field')); // v4
+
+		function q_front_theme_enqueue_styles() {
+			$the_theme = wp_get_theme();
+			wp_enqueue_style( 'custom-theme-styles', plugin_dir_url(__FILE__) . '/assets/css/front.css', array(), $the_theme->get( 'Version' ) );
+			wp_enqueue_script( 'jquery' );
+
+			wp_enqueue_style('bootstrap5', 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css');
+			wp_enqueue_script( 'bootstrapbundle','https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js', array( 'jquery' ),'',true );
+			wp_enqueue_script( 'popper','https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js', array( 'jquery' ),'',true );
+		}
+		
+		add_action( 'wp_enqueue_scripts', 'q_front_theme_enqueue_styles' );
 	}
 	
 	
@@ -93,4 +106,6 @@ new NAMESPACE_acf_plugin_FIELD_NAME();
 // class_exists check
 endif;
 	
+
+
 ?>
