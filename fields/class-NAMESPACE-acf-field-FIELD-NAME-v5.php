@@ -353,16 +353,13 @@ class NAMESPACE_acf_field_FIELD_NAME extends acf_field {
 			$r['id'] = $match2[5];
 		}
 
-		//print_r($r);
-
 		
 		$video = $r;
-
 		$video_info = $r;
+
 		$video_check = ($video_info['video'] == 'youtube' ? 'https://www.youtube.com/embed/' : ($video_info['video'] == 'vimeo' ? 'https://player.vimeo.com/video/' : ''));
 		$api = ($video_info['video'] == 'youtube' ? '?enablejsapi=1' : ($video_info['video'] == 'vimeo' ? '?api=1' : ''));
 
-		//myErr($video_info);
 		?>
 
 		<section class="video">
@@ -387,105 +384,6 @@ class NAMESPACE_acf_field_FIELD_NAME extends acf_field {
 			</div>
 		</section>
 		
-
-		<script>
-
-jQuery(document).ready(function(){
-
-
-	jQuery("#play-btn-wrap").mouseenter(function() {
-		jQuery("#pause-btn").removeClass("visibility-class");
-	});
-	jQuery("#pause-btn").mouseleave(function() {
-		jQuery(this).addClass("visibility-class");
-	});
-
-	});
-
-			// WP VIDEO
-			var video = document.getElementById("videoPlayer");
-			var btn = document.getElementById("round");
-			var bgCover = document.getElementById("video-cover");
-			function playPause() { 
-				if (video.paused) {
-					video.play();
-					btn.style.display = "none";
-					bgCover.style.display = "none";
-				}
-				else { 
-					video.pause();
-				} 
-			}
-
-			// https://developers.google.com/youtube/iframe_api_reference
-			// YOUTUBE
-			var playerYT;
-
-			// this function gets called when API is ready to use
-			function onYouTubePlayerAPIReady() {
-			// create the global player from the specific iframe (#video)
-			playerYT = new YT.Player("video-iframe", {
-				events: {
-				// call this function when player is ready to use
-				onReady: onPlayerReady
-				}
-			});
-			}
-
-
-			function onPlayerReady(event) {
-			// bind events
-			var playButtonYT = jQuery("#play-btn");
-			var pauseButtonYT = jQuery("#pause-btn");
-			var svgPlayer = document.getElementById("play");
-			var bgCover = document.getElementById("video-cover");
-
-				playButtonYT.on("click", function (e) {
-
-					if(jQuery(window).width() < 768) {
-						pauseButtonYT.addClass("d-none playing");
-					} else {
-						pauseButtonYT.toggleClass("d-none playing");
-					}
-
-					pauseButtonYT.removeClass("visibility-class");
-					playButtonYT.toggleClass("d-none");
-
-					bgCover.style.display = "none";
-
-					if(pauseButtonYT.hasClass("playing")) {
-						playerYT.playVideo();
-					} else {
-						playerYT.pauseVideo();
-					}
-
-			});
-
-			pauseButtonYT.on("click", function (e) {
-
-				pauseButtonYT.toggleClass("d-none playing");
-				playButtonYT.toggleClass("d-none");
-
-				bgCover.style.display = "none";
-
-				if(pauseButtonYT.hasClass("playing")) {
-					playerYT.playVideo();
-				} else {
-					playerYT.pauseVideo();
-				}
-
-				});
-
-			}
-
-			//Inject YouTube API script
-			var tag = document.createElement("script");
-			tag.src = "//www.youtube.com/player_api";
-			var firstScriptTag = document.getElementsByTagName("script")[0];
-			firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-		</script>
-
 		
 		<?php
 		return $value;

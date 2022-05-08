@@ -55,15 +55,20 @@ class NAMESPACE_acf_plugin_FIELD_NAME {
 
 		function q_front_theme_enqueue_styles() {
 			$the_theme = wp_get_theme();
+	
 			wp_enqueue_style( 'custom-theme-styles', plugin_dir_url(__FILE__) . '/assets/css/front.css', array(), $the_theme->get( 'Version' ) );
-			wp_enqueue_script( 'jquery' );
-
 			wp_enqueue_style('bootstrap5', 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css');
+			
+			wp_enqueue_script( 'jquery' );
+	
+			wp_enqueue_script( 'custom-theme-scripts__video-play-dynamic', plugin_dir_url(__FILE__) . '/assets/js/video-play-dynamic.js', array(), $the_theme->get( 'Version' ) );
+			wp_enqueue_script( 'custom-theme-scripts', plugin_dir_url(__FILE__) . '/assets/js/front.js', array(), $the_theme->get( 'Version' ) );
 			wp_enqueue_script( 'bootstrapbundle','https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js', array( 'jquery' ),'',true );
 			wp_enqueue_script( 'popper','https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js', array( 'jquery' ),'',true );
 		}
 		
 		add_action( 'wp_enqueue_scripts', 'q_front_theme_enqueue_styles' );
+		
 	}
 	
 	
