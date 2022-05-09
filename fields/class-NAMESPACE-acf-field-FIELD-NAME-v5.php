@@ -52,7 +52,7 @@ class NAMESPACE_acf_field_FIELD_NAME extends acf_field {
 		*/
 		
 		$this->defaults = array(
-			'font_size'	=> 14,
+			'predefined_action_buttons'	=> 0,
 		);
 		
 		
@@ -105,12 +105,38 @@ class NAMESPACE_acf_field_FIELD_NAME extends acf_field {
 		*/
 		
 		acf_render_field_setting( $field, array(
-			'label'			=> __('Font Size','TEXTDOMAIN'),
-			'instructions'	=> __('Customise the input font size','TEXTDOMAIN'),
-			'type'			=> 'number',
-			'name'			=> 'font_size',
-			'prepend'		=> 'px',
+			'label'			=> __('Predefined action buttons','TEXTDOMAIN'),
+			'instructions'	=> __('Use predefined action (play/pause) button?','TEXTDOMAIN'),
+			'type'			=> 'true_false',
+			'ui'			=> 1,
+			'name'			=> 'predefined_action_buttons',
 		));
+
+		acf_render_field_setting( $field, array(
+			'label'			=> __('Play button','TEXTDOMAIN'),
+			'instructions'	=> __('Upload your play button','TEXTDOMAIN'),
+			'type'			=> 'image',
+			'name'			=> 'play_button',
+			'conditions'   => [
+				'field'    => 'predefined_action_buttons',
+				'operator' => '==',
+				'value'    => 1
+			]
+		));
+
+		acf_render_field_setting( $field, array(
+			'label'			=> __('Pause button','TEXTDOMAIN'),
+			'instructions'	=> __('Upload your pause button','TEXTDOMAIN'),
+			'type'			=> 'image',
+			'name'			=> 'pause_button',
+			'conditions'   => [
+				'field'    => 'predefined_action_buttons',
+				'operator' => '==',
+				'value'    => 1
+			]
+		));
+
+
 
 	}
 	
@@ -360,6 +386,12 @@ class NAMESPACE_acf_field_FIELD_NAME extends acf_field {
 		$video_check = ($video_info['video'] == 'youtube' ? 'https://www.youtube.com/embed/' : ($video_info['video'] == 'vimeo' ? 'https://player.vimeo.com/video/' : ''));
 		$api = ($video_info['video'] == 'youtube' ? '?enablejsapi=1' : ($video_info['video'] == 'vimeo' ? '?api=1' : ''));
 
+		$play_btn_img = wp_get_attachment_image_src($field['play_button'], 'full', false)[0];
+		$pause_btn_img = wp_get_attachment_image_src($field['pause_button'], 'full', false)[0];
+
+		echo '<pre>';
+			print_r( $field );
+		echo '</pre>';
 		?>
 
 		<section class="video">
@@ -369,12 +401,12 @@ class NAMESPACE_acf_field_FIELD_NAME extends acf_field {
 			<div class="container-fluid px-0">
 			<div class="embed-responsive embed-responsive-16by9 z-depth-1-half">
 				<iframe id="video-iframe" class="embed-responsive-item" allow="autoplay; encrypted-media" src="<?php echo $video_check . $video_info['id'] . $api; ?>" allowfullscreen></iframe>
-				<button id="play-btn-wrap" type="button" class="btn-video p-0">
+				<button id="play-btn-wrap" type="button" style="width:189px;" class="btn-video p-0">
 					<div id="play-btn" class="play-btn">
-						<img id="play" src="<?php echo ROOT_PATH ?>assets/images/play-btn.svg" alt="play button">
+						<img id="play" src="<?php echo $play_btn_img; ?>" alt="play button">
 					</div> 
 					<div id="pause-btn" class="pause-btn d-none">
-						<img id="pause" src="<?php echo ROOT_PATH ?>assets/images/pause-btn.svg" alt="play button">
+						<img id="pause" src="<?php echo $pause_btn_img; ?>" alt="play button">
 					</div> 
 				</button>
 			</div>
