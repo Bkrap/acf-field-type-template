@@ -462,14 +462,18 @@ class NAMESPACE_acf_field_FIELD_NAME extends acf_field {
 			<div class="container-fluid px-0">
 			<div class="embed-responsive embed-responsive-16by9 z-depth-1-half">
 				<iframe id="video-iframe" class="embed-responsive-item" allow="autoplay; encrypted-media" src="<?php echo $video_check . $video_info['id'] . $api; ?>" allowfullscreen></iframe>
-				<button id="play-btn-wrap" type="button" style="width:189px;" class="btn-video p-0">
-					<div id="play-btn" class="play-btn">
-						<img id="play" src="<?php echo $play_btn_img; ?>" alt="play button">
-					</div> 
-					<div id="pause-btn" class="pause-btn d-none">
-						<img id="pause" src="<?php echo $pause_btn_img; ?>" alt="play button">
-					</div> 
-				</button>
+
+				<?php if(!empty($action_buttons_array) || $action_buttons_aray > 0) { ?>
+					<button id="play-btn-wrap" type="button" style="width:189px;" class="btn-video p-0">
+						<div id="play-btn" class="play-btn">
+							<img id="play" src="<?php echo $play_btn_img; ?>" alt="play button">
+						</div> 
+						<div id="pause-btn" class="pause-btn d-none">
+							<img id="pause" src="<?php echo $pause_btn_img; ?>" alt="play button">
+						</div> 
+					</button>
+				<?php } ?>
+				
 			</div>
 			<?php // if($params['video']['preview_image'] == 1) { ?>
 				<div id="video-cover" style="background-image: url('<?php // echo $params['video']['image']; ?>');"></div>
