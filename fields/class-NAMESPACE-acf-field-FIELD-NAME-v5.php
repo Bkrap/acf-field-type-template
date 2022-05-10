@@ -103,7 +103,8 @@ class NAMESPACE_acf_field_FIELD_NAME extends acf_field {
 		*  More than one setting can be added by copy/paste the above code.
 		*  Please note that you must also have a matching $defaults value for the field name (font_size)
 		*/
-		
+
+
 		acf_render_field_setting( $field, array(
 			'label'			=> __('Predefined action buttons','TEXTDOMAIN'),
 			'instructions'	=> __('Use predefined action (play/pause) button?','TEXTDOMAIN'),
@@ -165,9 +166,9 @@ class NAMESPACE_acf_field_FIELD_NAME extends acf_field {
 		*  This will show what data is available
 		*/
 		
-		echo '<pre>';
-			print_r( $field );
-		echo '</pre>';
+		// echo '<pre>';
+		// 	print_r( $field );
+		// echo '</pre>';
 		
 		
 		/*
@@ -359,13 +360,73 @@ class NAMESPACE_acf_field_FIELD_NAME extends acf_field {
 	
 	
 	
-	function load_value( $value, $post_id, $field ) {
+	// function load_value( $value, $post_id, $field ) {
 		
-		// echo '<pre>';
-		// 	print_r( $value  );
-		// echo '</pre>';
+	// 	// echo '<pre>';
+	// 	// 	print_r( $field  );
+	// 	// echo '</pre>';
 
-		$url = $value;
+		
+	// 	$url = $value;
+	// 	$r = array();
+	
+	// 	preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $url, $match1);
+	// 	preg_match("/(https?:\/\/)?(www\.)?(player\.)?vimeo\.com\/([a-z]*\/)*([0-9]{6,11})[?]?.*/", $url, $match2);
+
+	// 	if (count($match1) > 0) {
+	// 		$r['video'] = 'youtube';
+	// 		$r['id'] = $match1[1];
+	// 	} elseif (count($match2) > 0) {
+	// 		$r['video'] = 'vimeo';
+	// 		$r['id'] = $match2[5];
+	// 	}
+
+		
+	// 	$video = $r;
+	// 	$video_info = $r;
+
+	// 	$video_check = ($video_info['video'] == 'youtube' ? 'https://www.youtube.com/embed/' : ($video_info['video'] == 'vimeo' ? 'https://player.vimeo.com/video/' : ''));
+	// 	$api = ($video_info['video'] == 'youtube' ? '?enablejsapi=1' : ($video_info['video'] == 'vimeo' ? '?api=1' : ''));
+
+	// 	$play_btn_img = wp_get_attachment_image_src($field['play_button'], 'full', false)[0];
+	// 	$pause_btn_img = wp_get_attachment_image_src($field['pause_button'], 'full', false)[0];
+
+	// 	// echo '<pre>';
+	// 	// 	print_r( $field );
+	// 	// echo '</pre>';
+
+	// 	return $value;
+		
+	// }
+
+	/*
+	*  load_value_front()
+	*
+	*  This filter is applied to the $value after it is loaded from the db, and it is called on front page
+	*
+	*  @type	filter
+	*  @since	3.6
+	*  @date	23/01/13
+	*
+	*  @param	$url (string) the value of the url; youtube/vimeo
+	*  @param	$post_id (mixed) the $post_id from which the value was loaded
+	*  @param	$action_buttons_aray (array) the field array holding action buttons ID's
+	*  @example 
+
+			$field = array(
+
+				'play_button' => $params['play_button']['id'],
+				'pause_button' => $params['pause_button']['id'],
+				
+			 )
+
+	*  @return	$value
+	*/
+
+	function load_value_front( $url, $post_id, $action_buttons_array ) {
+		
+		
+		$url = $url;
 		$r = array();
 	
 		preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $url, $match1);
@@ -386,12 +447,12 @@ class NAMESPACE_acf_field_FIELD_NAME extends acf_field {
 		$video_check = ($video_info['video'] == 'youtube' ? 'https://www.youtube.com/embed/' : ($video_info['video'] == 'vimeo' ? 'https://player.vimeo.com/video/' : ''));
 		$api = ($video_info['video'] == 'youtube' ? '?enablejsapi=1' : ($video_info['video'] == 'vimeo' ? '?api=1' : ''));
 
-		$play_btn_img = wp_get_attachment_image_src($field['play_button'], 'full', false)[0];
-		$pause_btn_img = wp_get_attachment_image_src($field['pause_button'], 'full', false)[0];
+		$play_btn_img = wp_get_attachment_image_src($action_buttons_array['play_button'], 'full', false)[0];
+		$pause_btn_img = wp_get_attachment_image_src($action_buttons_array['pause_button'], 'full', false)[0];
 
-		echo '<pre>';
-			print_r( $field );
-		echo '</pre>';
+		// echo '<pre>';
+		// 	print_r( $field );
+		// echo '</pre>';
 		?>
 
 		<section class="video">
@@ -467,32 +528,32 @@ class NAMESPACE_acf_field_FIELD_NAME extends acf_field {
 	*  @return	$value (mixed) the modified value
 	*/
 		
-	/*
 	
-	function format_value( $value, $post_id, $field ) {
-		
-		// bail early if no value
-		if( empty($value) ) {
-		
-			return $value;
-			
-		}
-		
-		
-		// apply setting
-		if( $field['font_size'] > 12 ) { 
-			
-			// format the value
-			// $value = 'something';
-		
-		}
-		
-		
-		// return
-		return $value;
-	}
 	
-	*/
+	// function format_value( $value, $post_id, $field ) {
+		
+	// 	// bail early if no value
+	// 	if( empty($value) ) {
+		
+	// 		return $value;
+			
+	// 	}
+		
+		
+	// 	// apply setting
+	// 	if( $field['font_size'] > 12 ) { 
+			
+	// 		// format the value
+	// 		// $value = 'something';
+		
+	// 	}
+		
+		
+	// 	// return
+	// 	return $value;
+	// }
+	
+	
 	
 	
 	/*
@@ -578,13 +639,14 @@ class NAMESPACE_acf_field_FIELD_NAME extends acf_field {
 	*  @return	$field
 	*/
 
-	/*
-	function load_field( $field ) {
+	
+	// function load_field( $field ) {
 		
-		return $field;
+	// 	return $field;
+
 		
-	}	
-	*/
+	// }	
+	
 
 	
 	

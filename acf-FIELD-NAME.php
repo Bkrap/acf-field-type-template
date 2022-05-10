@@ -35,7 +35,7 @@ class NAMESPACE_acf_plugin_FIELD_NAME {
 	*  @since	1.0.0
 	*
 	*  @param	void
-	*  @return	voidd
+	*  @return	void
 	*/
 	
 	function __construct() {
