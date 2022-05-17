@@ -420,10 +420,26 @@ class NAMESPACE_acf_field_FIELD_NAME extends acf_field {
 				
 			 )
 
+	* @front acf template example
+		<?php
+
+		$fields = new NAMESPACE_acf_field_FIELD_NAME('');
+
+		$field = get_field('general', 'option')['video_buttons'];
+		// $field = 0 ; AKO ZELIMO BEZ CUSTOM BUTTONA
+		?>
+
+		<?php myErr($field); ?>
+
+		<?php $fields->load_value_front($params['custom_video'], $post_id, $field ); ?>
+
+		<?php //myErr($params); ?>
+	* end here
+
 	*  @return	$value
 	*/
 
-	function load_value_front( $url, $post_id, $action_buttons_array ) {
+	function load_value_front( $url, $post_id, $preview_image_url = 0, $action_buttons_array = 0 ) {
 		
 		
 		$url = $url;
@@ -447,8 +463,9 @@ class NAMESPACE_acf_field_FIELD_NAME extends acf_field {
 		$video_check = ($video_info['video'] == 'youtube' ? 'https://www.youtube.com/embed/' : ($video_info['video'] == 'vimeo' ? 'https://player.vimeo.com/video/' : ''));
 		$api = ($video_info['video'] == 'youtube' ? '?enablejsapi=1' : ($video_info['video'] == 'vimeo' ? '?api=1' : ''));
 
-		$play_btn_img = wp_get_attachment_image_src($action_buttons_array['play_button'], 'full', false)[0];
-		$pause_btn_img = wp_get_attachment_image_src($action_buttons_array['pause_button'], 'full', false)[0];
+		// aj provjeri ovo mislim da ne treba ovo sve. wp_get_att ...
+		$play_btn_img = wp_get_attachment_image_src($action_buttons_array['play']['id'], 'full', false)[0];
+		$pause_btn_img = wp_get_attachment_image_src($action_buttons_array['pause']['id'], 'full', false)[0];
 
 		// echo '<pre>';
 		// 	print_r( $field );
@@ -459,7 +476,7 @@ class NAMESPACE_acf_field_FIELD_NAME extends acf_field {
 			<div uk-lightbox>
 				<a href="<?php // echo $params['video']['image']; ?>" data-caption="Caption"></a>
 			</div>
-			<div class="container-fluid px-0">
+			<div class="container-fluid px-0" id="main-video-container">
 			<div class="embed-responsive embed-responsive-16by9 z-depth-1-half">
 				<iframe id="video-iframe" class="embed-responsive-item" allow="autoplay; encrypted-media" src="<?php echo $video_check . $video_info['id'] . $api; ?>" allowfullscreen></iframe>
 
@@ -475,9 +492,9 @@ class NAMESPACE_acf_field_FIELD_NAME extends acf_field {
 				<?php } ?>
 				
 			</div>
-			<?php // if($params['video']['preview_image'] == 1) { ?>
-				<div id="video-cover" style="background-image: url('<?php // echo $params['video']['image']; ?>');"></div>
-			<?php // } ?>
+			<?php if(isset($preview_image_url)) { ?>
+				<div id="video-cover" style="background-image: url('<?php echo $preview_image_url; ?>');"></div>
+			<?php  } ?>
 			</div>
 		</section>
 		
