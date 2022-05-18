@@ -30,3 +30,9 @@ This ACF field type is compatible with:
 
 = 1.0.0 =
 * Initial Release.
+
+== Current bugs 18.05.2022 ==
+- vimeo wont play
+- video wont play if there is no custom play button
+- if you play/pause beside play/pause button play/pause button will stay
+- play/pause button needs to be adaptive (style; height, width)

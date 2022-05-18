@@ -439,7 +439,7 @@ class NAMESPACE_acf_field_FIELD_NAME extends acf_field {
 	*  @return	$value
 	*/
 
-	function load_value_front( $url, $post_id, $preview_image_url = 0, $action_buttons_array = 0 ) {
+	function load_value_front( string $url, $post_id, string $container_type, int $height_value, string $height_measure_unit, string $preview_image_url, array $action_buttons_array ) {
 		
 		
 		$url = $url;
@@ -476,8 +476,8 @@ class NAMESPACE_acf_field_FIELD_NAME extends acf_field {
 			<div uk-lightbox>
 				<a href="<?php // echo $params['video']['image']; ?>" data-caption="Caption"></a>
 			</div>
-			<div class="container-fluid px-0" id="main-video-container">
-			<div class="embed-responsive embed-responsive-16by9 z-depth-1-half">
+			<div class="container<?php echo $container_type; ?> px-0" id="main-video-container">
+			<div class="embed-responsive embed-responsive-16by9 z-depth-1-half" style="height: <?php echo $height_value . $height_measure_unit; ?>">
 				<iframe id="video-iframe" class="embed-responsive-item" allow="autoplay; encrypted-media" src="<?php echo $video_check . $video_info['id'] . $api; ?>" allowfullscreen></iframe>
 
 				<?php if(!empty($action_buttons_array) || $action_buttons_aray > 0) { ?>
